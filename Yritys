@@ -1,0 +1,46 @@
+# tee ratkaisu tänne
+def lisaa_opiskelija(sanakirja: dict, opiskelija: str):
+    sanakirja[opiskelija] = []
+
+def tulosta(sanakirja: dict, opiskelija: str):    
+    if opiskelija not in sanakirja:
+            print(f"ei löytynyt ketään nimellä {opiskelija}")
+            return
+    elif len(sanakirja[opiskelija]) > 0:  
+        print(f"{opiskelija}: ")
+        print(f" suorituksia {len(sanakirja[opiskelija])} kurssilta:")
+        summa = 0
+        for tulos in sanakirja[opiskelija]:
+            print(" ", *tulos)
+            summa += tulos[1]
+        print(" keskiarvo",summa/len(sanakirja[opiskelija]))       
+    elif len(sanakirja[opiskelija]) < 1:
+        print(f"{opiskelija}: ")
+        print(f" ei suorituksia")
+    
+
+def lisaa_suoritus(sanakirja: dict, opiskelija: str, suoritus: tuple):
+    #suoritus = " ".join(str(x) for x in suoritus)
+    if suoritus[1] == 0:
+        return
+    for key, value in sanakirja.items():
+        if suoritus[0] in value[:]:
+            del sanakirja[opiskelija][value]
+            sanakirja[opiskelija].append(suoritus)
+        else:
+            sanakirja[opiskelija].append(suoritus)
+            return   
+
+
+if __name__ == "__main__":
+    opiskelijat = {}
+    lisaa_opiskelija(opiskelijat, "Pekka")
+    #lisaa_opiskelija(opiskelijat, "Liisa")
+    lisaa_suoritus(opiskelijat, "Pekka", ("Ohpe", 3))
+    #lisaa_suoritus(opiskelijat, "Pekka", ("Tira", 2))   
+    #lisaa_suoritus(opiskelijat, "Pekka", ("Tira", 3))
+    #lisaa_suoritus(opiskelijat, "Pekka", ("Lama", 0))
+    #lisaa_suoritus(opiskelijat, "Pekka", ("Ohpe", 2))
+    tulosta(opiskelijat, "Pekka")
+    #tulosta(opiskelijat, "Liisa")
+    #tulosta(opiskelijat, "Jukka")
